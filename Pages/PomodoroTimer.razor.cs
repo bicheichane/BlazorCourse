@@ -32,14 +32,21 @@ public class PomodoroTimerBase : ComponentBase, IDisposable
     {
         get
         {
+            var style = "timer";
             if (SecondsLeft <= 60)
             {
-                return "timer-red";
+                style += " timer-almost";
             }
-            else
+            else if (IsPaused)
             {
-                return "timer";
+                style += " timer-paused";
             }
+            else if(IsRunning)
+            {
+                style += " timer-running";
+            }
+
+            return style;
         }
     }
 

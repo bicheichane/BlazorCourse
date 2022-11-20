@@ -2,7 +2,14 @@
     font-size: 6em;
 }
 
-.timer-red {
-    font-size: 6em;
+.timer-running {
+    color: green;
+}
+
+.timer-paused {
+    color: yellow;
+}
+
+.timer-almost {
     color: red;
 }
