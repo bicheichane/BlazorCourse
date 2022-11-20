@@ -3,18 +3,11 @@
 
 <PageTitle>Pomodoro Timer (@SecondsLeftString)</PageTitle>
 
-<div class="timer">
+<div class="@TimerTextCss">
     @SecondsLeftString
 </div>
-<button class="btn btn-primary" @onclick="StartTimer">
-    @if (IsPaused)
-    {
-        <label>Resume</label>
-    }
-    else
-    {
-        <label>Start</label>
-    }
+<button class="btn btn-primary" disabled="@StartButtonDisabled" @onclick="StartTimer">
+    @StartButtonText
 </button>
-<button class="btn btn-secondary" @onclick="PauseTimer">Pause</button>
-<button class="btn btn-secondary" @onclick="StopTimer">Stop</button>
+<button class="btn btn-secondary" disabled="@PauseButtonDisabled" @onclick="PauseTimer">Pause</button>
+<button class="btn btn-secondary" disabled="@StopButtonDisabled" @onclick="StopTimer">Stop</button>

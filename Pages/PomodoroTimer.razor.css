@@ -1,3 +1,8 @@
 ﻿.timer {
     font-size: 6em;
 }
+
+.timer-red {
+    font-size: 6em;
+    color: red;
+}
