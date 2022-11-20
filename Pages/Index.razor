@@ -1,8 +1,9 @@
 ﻿@page "/"
 
-<PageTitle>Index</PageTitle>
+@using BlazorCourse.Pages.Components
 
-<Greetings Name="Jon"></Greetings>
-<Greetings Name="Bernardo"></Greetings>
-
-Welcome to your new app!
+<div class="row row-cols-3 g-4">
+    <div class="col">
+        <Panel heading="Pomodoro Timer"><PomodoroTimer /></Panel>
+    </div>
+</div>
