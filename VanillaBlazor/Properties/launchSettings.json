@@ -1,0 +1,22 @@
+{
+  "profiles": {
+    "BlazorCourse": {
+      "commandName": "Project",
+      "launchBrowser": true,
+      "nativeDebugging": true
+    },
+    "WSL": {
+      "commandName": "WSL2",
+      "launchBrowser": true,
+      "distributionName": ""
+    }
+  },
+  "iisSettings": {
+    "windowsAuthentication": false,
+    "anonymousAuthentication": true,
+    "iisExpress": {
+      "applicationUrl": "http://localhost:48686",
+      "sslPort": 44354
+    }
+  }
+}
