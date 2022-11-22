@@ -1,11 +1,43 @@
 ﻿@inherits LayoutComponentBase
 
-<MudThemeProvider />
+<MudThemeProvider IsDarkMode="true"/>
 <MudDialogProvider />
 <MudSnackbarProvider />
+
 <MudLayout>
+    <MudMainContent>
+        <MudContainer MaxWidth="MaxWidth.Small">
+            <div class="mud-theme-primary py-4 px-6 mx-4 rounded-t-xl">
+                <MudContainer>
+                    <MudStack>
+                        <MudStack Row="true" Justify="Justify.SpaceBetween" AlignItems="AlignItems.Center">
+                            <MudText>Swap</MudText>
+                            <MudIconButton Icon="@Icons.TwoTone.Settings" Size="Size.Medium"></MudIconButton>
+                        </MudStack>
+                        <MudPaper Class="pa-3">
+                            <MudText>Swap</MudText>
+                        </MudPaper>
+                        <MudPaper Class="pa-3">Item 2</MudPaper>
+                        <MudPaper Class="pa-3">Item 3</MudPaper>
+                    </MudStack>
+                </MudContainer>
+            </div>
+        </MudContainer>
+	</MudMainContent>
+</MudLayout>
+
+@code {
+    private MudTheme Theme = new MudTheme();
+    bool _drawerOpen = false;
+
+    void DrawerToggle()
+    {
+        _drawerOpen = !_drawerOpen;
+    }
+
+	/*
 	<MudAppBar>
-        <MudIconButton Icon="@Icons.Material.Filled.Menu" Color="Color.Inherit" Edge="Edge.Start" OnClick="@((e) => DrawerToggle())" />
+		<MudIconButton Icon="@Icons.Material.Filled.Menu" Color="Color.Inherit" Edge="Edge.Start" OnClick="@((e) => DrawerToggle())" />
 		My Application
 	</MudAppBar>
 	<MudDrawer Open=@_drawerOpen>
@@ -16,35 +48,5 @@
 			@Body
 		</MudContainer>
 	</MudMainContent>
-</MudLayout>
-
-@code {
-    bool _drawerOpen = true;
-
-    void DrawerToggle()
-    {
-        _drawerOpen = !_drawerOpen;
-    }
-
-	/*
-<MudLayout>
-    <MudAppBar Elevation="0">
-        <MudIconButton Icon="@Icons.Material.Filled.Menu" Color="Color.Inherit" Edge="Edge.Start" OnClick="@((e) => DrawerToggle())" />
-        <MudSpacer />
-        <MudIconButton Icon="@Icons.Custom.Brands.MudBlazor" Color="Color.Inherit" Link="https://mudblazor.com/" Target="_blank" />
-        <MudIconButton Icon="@Icons.Custom.Brands.GitHub" Color="Color.Inherit" Link="https://github.com/MudBlazor/MudBlazor/" Target="_blank" />
-    </MudAppBar>
-    <MudDrawer @bind-Open="_drawerOpen" Elevation="1">
-        <MudDrawerHeader>
-            <MudText Typo="Typo.h6">MudBlazorTrials</MudText>
-        </MudDrawerHeader>
-        <NavMenu />
-    </MudDrawer>
-    <MudMainContent>
-        <MudContainer MaxWidth="MaxWidth.Large" Class="my-16 pt-16">
-            @Body
-        </MudContainer>
-    </MudMainContent>
-</MudLayout>
-*/
+	*/
 }
