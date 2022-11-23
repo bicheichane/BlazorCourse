@@ -7,18 +7,38 @@
 <MudLayout>
     <MudMainContent>
         <MudContainer MaxWidth="MaxWidth.Small">
-            <div class="mud-theme-primary py-4 px-6 mx-4 rounded-t-xl">
+            <div class="mud-theme-primary py-4 px-6 mx-4 rounded-xl">
                 <MudContainer>
                     <MudStack>
-                        <MudStack Row="true" Justify="Justify.SpaceBetween" AlignItems="AlignItems.Center">
-                            <MudText>Swap</MudText>
-                            <MudIconButton Icon="@Icons.TwoTone.Settings" Size="Size.Medium"></MudIconButton>
-                        </MudStack>
-                        <MudPaper Class="pa-3">
-                            <MudText>Swap</MudText>
-                        </MudPaper>
-                        <MudPaper Class="pa-3">Item 2</MudPaper>
-                        <MudPaper Class="pa-3">Item 3</MudPaper>
+	                    <MudStack Row="true" Justify="Justify.SpaceBetween" AlignItems="AlignItems.Center">
+		                    <MudText>Swap</MudText>
+		                    <MudIconButton Icon="@Icons.TwoTone.Settings" Size="Size.Medium"></MudIconButton>
+	                    </MudStack>
+	                    <div class="mud-theme-dark p-3 rounded-xl">
+		                    <MudStack AlignItems="AlignItems.Stretch">
+			                    <MudTextField @bind-Value="FirstPairQuantity"
+			                                  HelperText="@FirstPairConversionText"
+											  Class="m-5 p-5"
+			                                  Variant="Variant.Text"
+			                                  Immediate="true"
+			                                  InputMode="InputMode.numeric"
+			                                  DisableUnderLine="true"
+			                                  Placeholder="0"/>
+		                    
+		                    </MudStack>
+	                    </div>
+	                    <div class="mud-dark-lighten p-3 rounded-xl">
+		                    <MudStack>
+			                    <MudTextField @bind-Value="SecondPairQuantity" 
+			                                  HelperText="@SecondPairConversionText"
+			                                  Variant="Variant.Text"
+			                                  Immediate="true"
+			                                  InputMode="InputMode.numeric"
+			                                  DisableUnderLine="true"
+			                                  Placeholder="0"/>
+		                    
+		                    </MudStack>
+	                    </div>
                     </MudStack>
                 </MudContainer>
             </div>
@@ -29,24 +49,14 @@
 @code {
     private MudTheme Theme = new MudTheme();
     bool _drawerOpen = false;
+    decimal FirstPairQuantity { get; set; }
+	string? FirstPairConversionText => FirstPairQuantity > 0 ? $"{FirstPairQuantity * 10}$" : null;
+
+    decimal SecondPairQuantity { get; set; }
+    string? SecondPairConversionText => SecondPairQuantity > 0 ? $"{SecondPairQuantity * 10}$" : null;
 
     void DrawerToggle()
     {
         _drawerOpen = !_drawerOpen;
     }
-
-	/*
-	<MudAppBar>
-		<MudIconButton Icon="@Icons.Material.Filled.Menu" Color="Color.Inherit" Edge="Edge.Start" OnClick="@((e) => DrawerToggle())" />
-		My Application
-	</MudAppBar>
-	<MudDrawer Open=@_drawerOpen>
-		<NavMenu/>
-	</MudDrawer>
-	<MudMainContent>
-		<MudContainer MaxWidth="MaxWidth.Medium">
-			@Body
-		</MudContainer>
-	</MudMainContent>
-	*/
 }
