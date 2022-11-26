@@ -1,62 +1,34 @@
 ﻿@inherits LayoutComponentBase
+@using MudBlazorTrials.Components
 
 <MudThemeProvider IsDarkMode="true"/>
 <MudDialogProvider />
 <MudSnackbarProvider />
 
 <MudLayout>
-    <MudMainContent>
-        <MudContainer MaxWidth="MaxWidth.Small">
-            <div class="mud-theme-primary py-4 px-6 mx-4 rounded-xl">
-                <MudContainer>
-                    <MudStack>
-	                    <MudStack Row="true" Justify="Justify.SpaceBetween" AlignItems="AlignItems.Center">
-		                    <MudText>Swap</MudText>
-		                    <MudIconButton Icon="@Icons.TwoTone.Settings" Size="Size.Medium"></MudIconButton>
-	                    </MudStack>
-	                    <div class="mud-theme-dark p-3 rounded-xl">
-		                    <MudStack AlignItems="AlignItems.Stretch">
-			                    <MudTextField @bind-Value="FirstPairQuantity"
-			                                  HelperText="@FirstPairConversionText"
-											  Class="m-5 p-5"
-			                                  Variant="Variant.Text"
-			                                  Immediate="true"
-			                                  InputMode="InputMode.numeric"
-			                                  DisableUnderLine="true"
-			                                  Placeholder="0"/>
-		                    
-		                    </MudStack>
-	                    </div>
-	                    <div class="mud-dark-lighten p-3 rounded-xl">
-		                    <MudStack>
-			                    <MudTextField @bind-Value="SecondPairQuantity" 
-			                                  HelperText="@SecondPairConversionText"
-			                                  Variant="Variant.Text"
-			                                  Immediate="true"
-			                                  InputMode="InputMode.numeric"
-			                                  DisableUnderLine="true"
-			                                  Placeholder="0"/>
-		                    
-		                    </MudStack>
-	                    </div>
-                    </MudStack>
-                </MudContainer>
-            </div>
-        </MudContainer>
-	</MudMainContent>
+	<CascadingValue Value="@Theme">
+		<MudMainContent>
+			<MudContainer MaxWidth="MaxWidth.Small">
+				<div class="mud-theme-primary py-4 px-6 mx-4 rounded-xl">
+					<MudContainer>
+						<MudStack>
+							<SwapPairField/>
+							<SwapPairField/>
+						</MudStack>
+					</MudContainer>
+				</div>
+			</MudContainer>
+		</MudMainContent>
+	</CascadingValue>
 </MudLayout>
 
+
 @code {
-    private MudTheme Theme = new MudTheme();
+	private MudTheme Theme = new MudTheme();
     bool _drawerOpen = false;
     decimal FirstPairQuantity { get; set; }
 	string? FirstPairConversionText => FirstPairQuantity > 0 ? $"{FirstPairQuantity * 10}$" : null;
 
     decimal SecondPairQuantity { get; set; }
     string? SecondPairConversionText => SecondPairQuantity > 0 ? $"{SecondPairQuantity * 10}$" : null;
-
-    void DrawerToggle()
-    {
-        _drawerOpen = !_drawerOpen;
-    }
 }

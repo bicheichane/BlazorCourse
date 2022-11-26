@@ -1,0 +1,135 @@
+﻿@inject IDialogService DialogService
+@namespace MudBlazorTrials.Components
+
+<MudStack AlignItems="AlignItems.Baseline"
+          Row="true"
+          Justify="Justify.SpaceBetween">
+
+	<MudTextField @bind-Value="PairQuantity"
+	              Class="m-5 p-5"
+	              Variant="Variant.Filled"
+	              Immediate="true"
+	              InputMode="InputMode.text"
+	              Placeholder="0"
+	              />
+	
+	<MudButton Variant="Variant.Outlined"
+	           StartIcon="@TickerIcon"
+	           OnClick="@ToggleDialogVisibility">@TickerName</MudButton>
+</MudStack>
+
+<MudDialog @bind-IsVisible="DialogVisibility" DisableSidePadding="true" Options="DialogOptions">
+	<TitleContent>
+		<MudText Typo="Typo.h6">
+			<MudIcon Class="mr-3"/>Select token
+		</MudText>
+	</TitleContent>
+	<DialogContent>
+		<MudContainer Style="height: 25rem; width: 25rem; overflow-y: scroll">
+			<MudTextField @bind-Value="@TickerFilterString"
+			              Variant="Variant.Filled"
+			              Immediate="true"
+			              AutoFocus="true"></MudTextField>
+
+			<MudList DisablePadding="true" Clickable="true" SelectedItemChanged="@SelectTicker">
+				@foreach (var item in FilteredTickerList)
+				{
+					<MudListItem Value="item" Avatar="@item.Icon">
+						<MudTextField Value="@item.Name" HelperText="@item.Ticker"
+						              ReadOnly="true" Variant="Variant.Filled"
+						              DisableUnderLine="true" Margin="Margin.Dense"
+						              Disabled="true"
+						              Style="@($"color:{Theme?.Palette.TextPrimary}")"/>
+					</MudListItem>
+				}
+			</MudList>
+		</MudContainer>
+	</DialogContent>
+</MudDialog>
+
+@code {
+	[CascadingParameter]
+	public MudTheme? Theme { get; set; }
+
+	[Parameter]
+	public int? PairQuantity { get; set; }
+
+	//public IMask RegexMask = new RegexMask(@"^\d*\.?\d?$");
+
+	DialogOptions DialogOptions = new() { CloseButton = true, MaxWidth = MaxWidth.Medium };
+	bool DialogVisibility { get; set; } = false;
+
+	private void ToggleDialogVisibility() => DialogVisibility = !DialogVisibility;
+
+	private void SelectTicker(MudListItem item)
+	{
+		if (item.Value is TickerListItem tickerItem)
+		{
+			TickerIcon = tickerItem.Icon;
+			TickerName = tickerItem.Ticker;
+		}
+		ToggleDialogVisibility();
+	}
+
+	public string? TickerIcon { get; set; }
+
+	public string? TickerName { get; set; } = "BTC";
+
+	private string? TickerFilterString { get; set; }
+
+	private List<TickerListItem> FilteredTickerList => string.IsNullOrEmpty(TickerFilterString) ? TickerList : TickerList.FindAll((ticker) => ticker.Matches(TickerFilterString));
+
+	public class TickerListItem
+	{
+		public string Ticker { get; set; }
+		public string Name { get; set; }
+		public string Icon { get; set; } = "<path d=\"M0 0h24v24H0z\" fill=\"none\"/><path d=\"M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z\"/>";
+
+		public TickerListItem(string ticker, string name)
+		{
+			Ticker = ticker;
+			Name = name;
+		}
+
+		public TickerListItem(MudListItem item)
+		{
+			if (item.Value is MudTextField<string> textField)
+			{
+				Ticker = textField.HelperText;
+				Name = textField.Value;
+			}
+			else
+			{
+				throw new Exception("MudListItem did not contain the expected Value structure");
+			}
+		}
+
+		public bool Matches(string str) => Ticker.Contains(str, StringComparison.CurrentCultureIgnoreCase) ||
+		                                   Name.ToLower().Contains(str, StringComparison.CurrentCultureIgnoreCase);
+	}
+
+	private List<TickerListItem> TickerList = new()
+	{
+		new TickerListItem("ETH", "Ethereum"),
+		new TickerListItem("USDT", "Tether"),
+	
+	 new TickerListItem("BTC", "Bitcoin"),
+	 new TickerListItem("BNB", "BNB"),
+		new TickerListItem("USDC", "USD Coin"),
+	new TickerListItem("BUSD", "Binance USD"),
+		new TickerListItem("XRP", "XRP"),
+		new TickerListItem("ADA", "Cardano"),
+		new TickerListItem("DOGE", "Dogecoin"),
+		new TickerListItem("MATIC", "Polygon"),
+		new TickerListItem("DOT", "Polkadot"),
+		new TickerListItem("DAI", "Dai"),
+		new TickerListItem("LTC", "Litecoin"),
+		new TickerListItem("SOL", "Solana"),
+		new TickerListItem("SHIB", "Shiba Inu"),
+		new TickerListItem("TRX", "Tron"),
+		new TickerListItem("UNI", "Uniswap")
+	};
+
+	
+
+}
